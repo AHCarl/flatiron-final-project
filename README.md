@@ -1,8 +1,8 @@
 # flatiron-final-project
------
+
 Mobile workout logging app with a notepad-like interface that parses user input using a simple Domain Specific Language. It should be simple to use for everyone, yet allow in-depth data analytics for enthusiasts.
 
-##Functionality
+## Functionality
 
 - DSL can differentiate between exercise declarations, weight x reps x sets information, and notes/comments
 - User can choose from a list of exercises or create their own
@@ -13,21 +13,21 @@ Mobile workout logging app with a notepad-like interface that parses user input 
   - Metrics are based on calculations from existing data, so user can enable/disable at any time
 
 
-##Domain
+## Domain
 - User has many Exercises 
 - User has many Workouts
 - Many to Many relationship between Workouts & Exercises (WorkoutExercises join class)
 
 But I'm using a non-relational database.
 
-##Technology
+## Technology
 React Native, Redux, Node.js, Express, MongoDB
 
 No external APIs
 
 Development will be Android-centric since I don't have an iPhone
 
-##DSL
+## DSL
 Example input: 
 
 ```
