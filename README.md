@@ -21,7 +21,7 @@ Mobile workout logging app with a notepad-like interface that parses user input 
 But I'm using a non-relational database.
 
 ## Technology
-React Native, Redux, Node.js, Express, MongoDB
+React Native, Reactive Native Elements, React Native Navigation, Redux, Node.js, Express, MongoDB
 
 No external APIs
 
