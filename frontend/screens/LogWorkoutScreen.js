@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+
 
 
 export default class LogWorkoutScreen extends React.Component {
@@ -9,15 +11,9 @@ export default class LogWorkoutScreen extends React.Component {
   };
 
   state = {
-    text: '',
-    keyboard: 'numbers-and-punctuation',
+    bodyWeight: '180',
+    log: '',
     testWidth: '99%'
-  }
-
-  changeKeyboardOnNewline = (input) => {
-    if (input === '\n') {
-      this.setState({keyboard: 'numeric'})
-    }
   }
 
   componentDidMount () {
@@ -31,7 +27,12 @@ export default class LogWorkoutScreen extends React.Component {
 
   render() {
     return (
-      <View removeClippedSubviews={false} style={{flex: 1, padding: 8}}>
+      <View removeClippedSubviews={false} style={{flex: 1, padding: 6}}>
+        {/* <TextInput style={styles.bodyWeightInput} defaultValue={this.state.bodyWeight}
+        onChangeText={(bodyWeight) => this.setState({bodyWeight})}>
+        </TextInput> */}
+        <FormLabel>Bodyweight:</FormLabel>
+        <FormInput inputStyle={styles.bodyWeightInput} onChangeText={(bodyWeight) => this.setState({bodyWeight})}/>
         <TextInput style={
           { width: this.state.testWidth,
             padding: 4,
@@ -44,8 +45,7 @@ export default class LogWorkoutScreen extends React.Component {
           multiline={true}
           selectTextOnFocus={true}
           placeholder="Start logging!"
-          onChange={(input) => this.changeKeyboardOnNewline(input)}
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(log) => this.setState({log})}
           keyboardType={this.state.keyboard}
         >
 
@@ -56,11 +56,10 @@ export default class LogWorkoutScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  textBox: {
-    padding: 4,
-    height: 400,
-    borderColor: 'gray',
-    borderWidth: 2,
-    textAlignVertical: 'top'
+  bodyWeightInput: {
+    width: 66,
+    borderBottomColor: 'lightgrey',
+    borderBottomWidth: 2,
+    marginBottom: 5
   }
 })
