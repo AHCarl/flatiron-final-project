@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LogWorkoutScreen from '../screens/LogWorkoutScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -53,9 +54,24 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+const LogWorkoutStack = createStackNavigator({
+  LogWorkout: LogWorkoutScreen,
+});
+
+LogWorkoutStack.navigationOptions = {
+  tabBarLabel: 'Log Workout',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-options' : 'md-create'}
+    />
+  ),
+};
+
 
 export default createBottomTabNavigator({
   HomeStack,
+  LogWorkoutStack,
   LinksStack,
   SettingsStack,
 });

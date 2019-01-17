@@ -21,7 +21,7 @@ const userSchema = new Schema({
   ],
   workouts: [
     {
-      date: {type: Date, required: true},
+      date: {type: Date, required: true, unique: true},
       bodyweightToday: {type: Number},
       exercisesToday: [
         {
