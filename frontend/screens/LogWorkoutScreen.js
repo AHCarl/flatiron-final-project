@@ -27,9 +27,6 @@ export default class LogWorkoutScreen extends React.Component {
   render() {
     return (
       <View style={{flex: 1, padding: 6}}>
-        {/* <TextInput style={styles.bodyWeightInput} defaultValue={this.state.bodyWeight}
-        onChangeText={(bodyWeight) => this.setState({bodyWeight})}>
-        </TextInput> */}
         <Text style={{fontSize: 12}}>Bodyweight:</Text>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-between"}}>
           <TextInput style={styles.bodyWeightInput} value={this.state.bodyWeight}
@@ -65,6 +62,8 @@ const styles = StyleSheet.create({
   logButton: {
     backgroundColor: '#ffb042',
     bottom: 11,
-    height: 40
+    height: 40,
+    borderColor: 'transparent',
+    borderRadius: 3
   }
 })

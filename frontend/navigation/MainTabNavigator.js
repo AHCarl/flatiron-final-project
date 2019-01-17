@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import SignInScreen from '../screens/SignInScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LogWorkoutScreen from '../screens/LogWorkoutScreen'
 
@@ -26,16 +26,16 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const SignInStack = createStackNavigator({
+  SignIn: SignInScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+SignInStack.navigationOptions = {
+  tabBarLabel: 'Sign In',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-link' : 'md-log-in'}
     />
   ),
 };
@@ -72,6 +72,6 @@ LogWorkoutStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   LogWorkoutStack,
-  LinksStack,
+  SignInStack,
   SettingsStack,
 });
