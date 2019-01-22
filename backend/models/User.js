@@ -1,19 +1,42 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const userSchema = require('../schemas/userSchema')
+const userSchema = require('../schemas/userSchema');
+const bcrypt = require('bcrypt-nodejs');
 
-const User = mongoose.model('users', userSchema)
+userSchema.pre('save', function(next) {
+  const user = this;
+  bcrypt.genSalt(10, function(err, salt) {
+    if (err) {
+      return next(err)
+    }
+    bcrypt.hash(user.password, salt, null, function(err, hash) {
+      if (err) {
+        return next(err)
+      }
+      user.password = hash
+      next()
+    })
+  })
+})
+
+// don't use a fat arrow function; because you need access to `this`
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) {
+      return callback(err)
+    }
+    callback(null, isMatch)
+  })
+}
+const ModelClass = mongoose.model('users', userSchema);
 
 let newDate = new Date
-
 let roddyDate = newDate.toDateString()
 
-
-User.find({}, (err, users) => {
+ModelClass.find({}, (err, users) => {
   if (err) {
     console.log(err);
   } else if (users.length === 0) {
-    const user1 = new User({
+    const user1 = new ModelClass({
       email: 'roddytoddman@goog.com',
       username: 'RAMROD',
       password: '1234',
@@ -82,7 +105,7 @@ User.find({}, (err, users) => {
         }
       ]
   })
-    const user2 = new User({
+    const user2 = new ModelClass({
       email: 'stromkuzewon@goog.com',
       username: 'StrummyQQ',
       password: '1234',
@@ -163,4 +186,4 @@ let myWorkout = {
 //   }
 // })
 
-module.exports = User
+module.exports = ModelClass

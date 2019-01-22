@@ -12,3 +12,16 @@ exports.readAll = (req, res, next) => {
     }
   })
 }
+
+exports.readMe = (req, res, next) => {
+  User.findOne({email: req.email}, (err, user) => {
+    if (err) {
+      res.status(500).json({
+        success: false,
+        error: err
+      })
+    } else {
+      res.status(200).json(user)
+    }
+  })
+}

@@ -1,11 +1,14 @@
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const bodyParser = require('body-parser')
 
 const router = require('./router/routes')
 
 const app = express();
 
+app.use(bodyParser.json())
 router(app)
 
 const server = http.createServer(app)
