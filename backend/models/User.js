@@ -4,7 +4,10 @@ const userSchema = require('../schemas/userSchema')
 
 const User = mongoose.model('users', userSchema)
 
-const roddyDate = new Date
+let newDate = new Date
+
+let roddyDate = newDate.toDateString()
+
 
 User.find({}, (err, users) => {
   if (err) {
@@ -106,12 +109,58 @@ User.find({}, (err, users) => {
           isTimed: true,
           personalRecords: []
         }
-      ]
+      ],
+      workouts: []
     })
     user1.save()
     user2.save()
     console.log('Seeded DB with 2 new users.');
   }
 })
+
+//db update test
+// User.findOneAndUpdate({email: "stromkuzewon@goog.com"}, {bodyweight: 181}, (err, user) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     user.bodyweight = 181
+//   }
+// })
+
+let myWorkout = {
+  date: roddyDate,
+  bodyweightToday: 88,
+  exercisesToday: [
+    {
+      exercise: 'Squat',
+      data: [ 
+        {
+          weight: 135,
+          reps: 5,
+          sets: 5
+        }
+      ] 
+    },
+    {
+      exercise: 'Bench Press',
+      data: [
+        {
+          weight: 95,
+          reps: 5,
+          sets: 5
+        }
+      ]
+    }
+  ]
+}
+
+// test add new workout
+// User.findOneAndUpdate({email: "stromkuzewon@goog.com"}, {workouts: myWorkout}, (err, user) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     user.workouts.push(myWorkout)
+//   }
+// })
 
 module.exports = User
