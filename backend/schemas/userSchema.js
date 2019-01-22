@@ -10,11 +10,12 @@ const userSchema = new Schema({
   exercises: [
     {
       name: {String, unique: true},
-      isTimed: {type: Boolean},
+      isTimed: {type: Boolean, default: false},
       personalRecords: [
         {
           repCount: {type: Number, unique: true},
-          amount: {type: Number}
+          amount: {type: Number}, 
+          date: {type: Date}
         }
       ]
     }
@@ -25,13 +26,15 @@ const userSchema = new Schema({
       bodyweightToday: {type: Number},
       exercisesToday: [
         {
-          exerciseId: {type: Number},
-          workoutId: {type: Number},
-          weight: {type: Number},
-          reps: {type: Number},
-          sets: {type: Number},
-          time: {type: Number, default: null},
-          restTime: {type: Number, default: null}
+          exercise: {type: String},
+          data: [ 
+            {
+              weight: {type: Number},
+              reps: {type: Number},
+              sets: {type: Number},
+              restTime: {type: Number, default: null}
+            }
+          ]
         }
       ]
     }
