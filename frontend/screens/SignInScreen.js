@@ -28,7 +28,7 @@ export default class SignInScreen extends React.Component {
           <FormLabel>PASSWORD</FormLabel>
           <FormInput inputStyle={styles.input} textContentType={'password'} textAlign={'center'} secureTextEntry={true}/>
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
-          <Button title={"SUBMIT"} buttonStyle={styles.button} onPress={this._signInAsync}></Button>
+          <Button title={"SIGN ME IN"} buttonStyle={styles.inButton} onPress={this._signInAsync}></Button>
         </View>
         <Button title="Click here to sign up!" onPress={this.navigateToSignUp}></Button>
       </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#bbb',
     borderBottomWidth: 2
   },
-  button: {
+  inButton: {
     backgroundColor: '#6b1596',
     width: 88,
     height: 33,

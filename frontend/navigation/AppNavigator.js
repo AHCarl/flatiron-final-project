@@ -1,9 +1,16 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
-import AuthStack from './AuthStack';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen'
+
+
+const AuthStack =  createStackNavigator({
+  SignIn: SignInScreen,
+  SignUp: SignUpScreen
+})
 
 export default createAppContainer(createSwitchNavigator({
   // You could add another route here for authentication.
@@ -12,5 +19,5 @@ export default createAppContainer(createSwitchNavigator({
   Main: MainTabNavigator,
   Auth: AuthStack
 },
-{ initialRouteName: 'AuthLoading'}
+{ initialRouteName: 'AuthLoading' }
 ));
