@@ -4,7 +4,7 @@ const userSchema = require('../schemas/userSchema')
 
 const User = mongoose.model('users', userSchema)
 
-let roddyDate = new Date
+const roddyDate = new Date
 
 User.find({}, (err, users) => {
   if (err) {
@@ -12,7 +12,7 @@ User.find({}, (err, users) => {
   } else if (users.length === 0) {
     const user1 = new User({
       email: 'roddytoddman@goog.com',
-      userName: 'RAMROD',
+      username: 'RAMROD',
       password: '1234',
       bodyweight: '88',
       isMetric: true,
