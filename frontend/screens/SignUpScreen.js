@@ -1,18 +1,21 @@
 import React from 'react';
 import Colors from '../constants/Colors'
 import { View, StyleSheet } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements'
+import SignOutIcon from '../components/SignOutIcon'
 
 export default class SignUpScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Sign Up!"
+    header: null
   }
 
   render() {
     return (
       //enable FVM once error handling is in place 
-      <View style={{flex: 1, alignItems: 'center'}}>
+      <View style={{flex: 1}}>
+      <Header centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
+        <View style={{flex: 1, alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
           <FormInput inputStyle={styles.input} textContentType={'emailAddress'} textAlign={'center'}/>
           {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
@@ -21,6 +24,7 @@ export default class SignUpScreen extends React.Component {
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
           <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signInAsync}></Button>
         </View>
+      </View>
     );
   }
 }
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2
   },
   upButton: {
-    backgroundColor: Colors.tintColor,
+    backgroundColor: Colors.signButton,
     top: 16,
     borderColor: 'transparent',
     borderRadius: 3,

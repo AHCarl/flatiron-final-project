@@ -1,12 +1,13 @@
 import React from 'react';
 import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements';
+import SignOutIcon from '../components/SignOutIcon'
 
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Sign In',
+    header: null,
   };
 
   _signInAsync = async () => {
@@ -23,6 +24,8 @@ export default class SignInScreen extends React.Component {
     return (
       //enable FVM once error handling is in place 
       <View style={{flex: 1}}>
+      <Header centerComponent={{ text: 'Sign In', style: { color: '#fff' } }}
+      />
         <View style={{alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
           <FormInput inputStyle={styles.input} textContentType={'emailAddress'} textAlign={'center'}/>

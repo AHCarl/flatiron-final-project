@@ -22,8 +22,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
       <Header 
-      leftComponent={{ icon: 'menu', color: '#fff'}}
-      centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+      centerComponent={{ text: 'Home Screen', style: { color: '#fff' } }}
       rightComponent={<SignOutIcon />}
       />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>

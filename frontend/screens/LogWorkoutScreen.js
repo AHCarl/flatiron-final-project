@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
+import SignOutIcon from '../components/SignOutIcon'
 
 
 export default class LogWorkoutScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Log Workout',
+    header: null,
   };
 
   state = {
@@ -27,6 +28,11 @@ export default class LogWorkoutScreen extends React.Component {
   //TODO 3: get onPress submitting to backend
   render() {
     return (
+      <View style={{flex: 1}}>
+      <Header 
+      centerComponent={{ text: 'Log Workout', style: { color: '#fff' } }}
+      rightComponent={<SignOutIcon />}
+      />
       <View style={{flex: 1, padding: 6}}>
         <Text style={{fontSize: 12}}>Bodyweight:</Text>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-between"}}>
@@ -47,6 +53,7 @@ export default class LogWorkoutScreen extends React.Component {
           placeholder="Start logging!"
           onChangeText={(log) => this.setState({log})}
           keyboardType={this.state.keyboard} />
+          </View>
       </View>
     )
   }
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
   },
   logButton: {
     backgroundColor: '#ffb042',
-    bottom: 11,
+    bottom: 9,
     height: 40,
     borderColor: 'transparent',
     borderRadius: 3
