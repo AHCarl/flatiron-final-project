@@ -1,5 +1,6 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation';
+import { persistenceKey } from '../constants/Keys'
 
 import MainTabNavigator from './MainTabNavigator';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
@@ -12,7 +13,7 @@ const AuthStack =  createStackNavigator({
   SignUp: SignUpScreen
 })
 
-export default createAppContainer(createSwitchNavigator({
+const App = createAppContainer(createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
   AuthLoading: AuthLoadingScreen,
@@ -21,3 +22,9 @@ export default createAppContainer(createSwitchNavigator({
 },
 { initialRouteName: 'AuthLoading' }
 ));
+
+export default class AppNavigator extends React.Component {
+  render() {
+    return <App persistenceKey={persistenceKey} />
+  }
+}
