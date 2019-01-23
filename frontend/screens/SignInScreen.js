@@ -1,4 +1,5 @@
 import React from 'react';
+import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 
@@ -29,9 +30,9 @@ export default class SignInScreen extends React.Component {
           <FormLabel>PASSWORD</FormLabel>
           <FormInput inputStyle={styles.input} textContentType={'password'} textAlign={'center'} secureTextEntry={true}/>
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
-          <Button title={"SIGN ME IN"} buttonStyle={styles.inButton} onPress={this._signInAsync}></Button>
+          <Button title={"SIGN IN"} buttonStyle={styles.inButton} onPress={this._signInAsync}></Button>
         </View>
-        <Button title="Click here to sign up!" onPress={this.navigateToSignUp}></Button>
+        <Button title="Click here to sign up!" buttonStyle={styles.upButton} onPress={this.navigateToSignUp}></Button>
       </View>
     );
   }
@@ -46,11 +47,14 @@ const styles = StyleSheet.create({
   },
   inButton: {
     backgroundColor: '#6b1596',
-    width: 88,
-    height: 33,
     top: 16,
     borderColor: 'transparent',
     borderRadius: 3,
-    left: 58
+  },
+  upButton: {
+    top: 20,
+    backgroundColor: Colors.tintColor,
+    borderColor: 'transparent',
+    borderRadius: 3,
   }
 });

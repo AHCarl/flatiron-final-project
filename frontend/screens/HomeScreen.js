@@ -11,6 +11,7 @@ import {
 import { Header } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
+import SignOutIcon from '../components/SignOutIcon';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -23,7 +24,7 @@ export default class HomeScreen extends React.Component {
       <Header 
       leftComponent={{ icon: 'menu', color: '#fff'}}
       centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-      rightComponent={{ icon: 'sign-out', type: 'font-awesome', color: "#fff"}}
+      rightComponent={<SignOutIcon />}
       />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>

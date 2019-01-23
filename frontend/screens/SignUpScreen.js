@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { View } from 'react-native';
+import Colors from '../constants/Colors'
+import { View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 
 export default class SignUpScreen extends React.Component {
@@ -19,8 +19,23 @@ export default class SignUpScreen extends React.Component {
           <FormLabel>PASSWORD</FormLabel>
           <FormInput inputStyle={styles.input} textContentType={'password'} textAlign={'center'} secureTextEntry={true}/>
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
-          <Button title={"SIGN ME UP!"} buttonStyle={styles.button} onPress={this._signInAsync}></Button>
+          <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signInAsync}></Button>
         </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  input: {
+    width: 200,
+    backgroundColor: '#fff',
+    borderBottomColor: '#bbb',
+    borderBottomWidth: 2
+  },
+  upButton: {
+    backgroundColor: Colors.tintColor,
+    top: 16,
+    borderColor: 'transparent',
+    borderRadius: 3,
+  }
+});
