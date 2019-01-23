@@ -3,24 +3,46 @@ import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements';
 import { userUrl } from "../constants/Keys"
+import { axios} from 'axios'
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+
   state = {
-    user : {
-      email: '',
-      password: ''
-    },
+    email: '',
+    password: '',
     error: null
   }
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem("userToken", 'abc123')
-    await fetch(`${userUrl}/signin`)
-    this.props.navigation.navigate('Main')
+  // userData = {email: this.state.email, password: this.state.password}
+
+
+  _signIn = () => {
+    console.log("before fetch")
+    fetch(`http://10.185.5.255:5000/api/test`, {
+      method: 'POST',
+      body: JSON.stringify({"email": this.state.email, "password": this.state.password}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => {
+      console.log("first resp")
+      return resp.ok ? resp.json() : resp.statusText
+    })
+    .then(resp => {
+      if (resp === "Unauthorized") {
+        this.setState({error: 'Incorrect username or password'})
+      } else {
+        console.log("probably superfluous")
+        AsyncStorage.setItem("userToken", resp.token)
+        this.props.navigation.navigate('Main')
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   navigateToSignUp = () => {
@@ -29,6 +51,7 @@ export default class SignInScreen extends React.Component {
   
   //TODO 1 make SignIn work with backend seed data
   render() {
+
     return (
       //enable FVM once error handling is in place 
       <View style={{flex: 1}}>
@@ -36,12 +59,12 @@ export default class SignInScreen extends React.Component {
       />
         <View style={{alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
-          <FormInput inputStyle={styles.input} textContentType={'emailAddress'} textAlign={'center'}/>
+          <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} textAlign={'center'} onChangeText={(email) => this.setState({email})}/>
           {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
           <FormLabel>PASSWORD</FormLabel>
-          <FormInput inputStyle={styles.input} textContentType={'password'} textAlign={'center'} secureTextEntry={true}/>
+          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
-          <Button title={"SIGN IN"} buttonStyle={styles.inButton} onPress={this._signInAsync}></Button>
+          <Button title={"SIGN IN"} buttonStyle={styles.inButton} onPress={() => this._signIn()}></Button>
         </View>
         <Button title="Click here to sign up!" buttonStyle={styles.upButton} onPress={this.navigateToSignUp}></Button>
       </View>
