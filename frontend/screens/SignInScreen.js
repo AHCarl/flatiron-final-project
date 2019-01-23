@@ -2,8 +2,7 @@ import React from 'react';
 import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements';
-import { userUrl } from "../constants/Keys"
-import { axios} from 'axios'
+import Keys from "../constants/Keys"
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -21,8 +20,7 @@ export default class SignInScreen extends React.Component {
 
 
   _signIn = () => {
-    console.log("before fetch")
-    fetch(`http://10.185.5.255:5000/api/test`, {
+    fetch(`${Keys.userUrl}/signin`, {
       method: 'POST',
       body: JSON.stringify({"email": this.state.email, "password": this.state.password}),
       headers: {
@@ -30,14 +28,12 @@ export default class SignInScreen extends React.Component {
       }
     })
     .then(resp => {
-      console.log("first resp")
       return resp.ok ? resp.json() : resp.statusText
     })
     .then(resp => {
       if (resp === "Unauthorized") {
         this.setState({error: 'Incorrect username or password'})
       } else {
-        console.log("probably superfluous")
         AsyncStorage.setItem("userToken", resp.token)
         this.props.navigation.navigate('Main')
       }
@@ -49,7 +45,6 @@ export default class SignInScreen extends React.Component {
     this.props.navigation.navigate('SignUp')
   }
   
-  //TODO 1 make SignIn work with backend seed data
   render() {
 
     return (
