@@ -2,16 +2,24 @@ import React from 'react';
 import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements';
-import SignOutIcon from '../components/SignOutIcon'
-
+import { userUrl } from "../constants/Keys"
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  state = {
+    user : {
+      email: '',
+      password: ''
+    },
+    error: null
+  }
+
   _signInAsync = async () => {
     await AsyncStorage.setItem("userToken", 'abc123')
+    await fetch(`${userUrl}/signin`)
     this.props.navigation.navigate('Main')
   }
 

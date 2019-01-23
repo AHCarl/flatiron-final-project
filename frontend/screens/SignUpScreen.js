@@ -2,7 +2,7 @@ import React from 'react';
 import Colors from '../constants/Colors'
 import { View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements'
-import SignOutIcon from '../components/SignOutIcon'
+import MyBackButton from '../components/MyBackButton'
 
 export default class SignUpScreen extends React.Component {
 
@@ -14,7 +14,7 @@ export default class SignUpScreen extends React.Component {
     return (
       //enable FVM once error handling is in place 
       <View style={{flex: 1}}>
-      <Header centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
+      <Header leftComponent={<MyBackButton/>} centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
         <View style={{flex: 1, alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
           <FormInput inputStyle={styles.input} textContentType={'emailAddress'} textAlign={'center'}/>

@@ -38,7 +38,6 @@ ModelClass.find({}, (err, users) => {
   } else if (users.length === 0) {
     const user1 = new ModelClass({
       email: 'roddytoddman@goog.com',
-      username: 'RAMROD',
       password: '1234',
       bodyweight: '88',
       isMetric: true,
@@ -107,7 +106,6 @@ ModelClass.find({}, (err, users) => {
   })
     const user2 = new ModelClass({
       email: 'stromkuzewon@goog.com',
-      username: 'StrummyQQ',
       password: '1234',
       bodyweight: 183,
       isMetric: false,
