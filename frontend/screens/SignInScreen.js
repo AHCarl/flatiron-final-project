@@ -17,6 +17,7 @@ export default class SignInScreen extends React.Component {
     this.props.navigation.navigate('SignUp')
   }
   
+  //TODO 1 make SignIn work with backend seed data
   render() {
     return (
       //enable FVM once error handling is in place 

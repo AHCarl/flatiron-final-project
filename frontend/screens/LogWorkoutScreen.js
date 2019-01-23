@@ -24,6 +24,7 @@ export default class LogWorkoutScreen extends React.Component {
     }, 100)
   }
 
+  //TODO 3: get onPress submitting to backend
   render() {
     return (
       <View style={{flex: 1, padding: 6}}>
