@@ -10,6 +10,12 @@ export default class SignUpScreen extends React.Component {
     header: null
   }
 
+  state = {
+    email = '',
+    password = ''
+  }
+
+  //TODO: change onPress to _signUp method
   render() {
     return (
       //enable FVM once error handling is in place 
@@ -17,10 +23,10 @@ export default class SignUpScreen extends React.Component {
       <Header leftComponent={<MyBackButton/>} centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
         <View style={{flex: 1, alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
-          <FormInput inputStyle={styles.input} textContentType={'emailAddress'} textAlign={'center'}/>
+          <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} textAlign={'center'} onChangeText={(email) => this.setState({email})}/>
           {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
           <FormLabel>PASSWORD</FormLabel>
-          <FormInput inputStyle={styles.input} textContentType={'password'} textAlign={'center'} secureTextEntry={true}/>
+          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
           <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signInAsync}></Button>
         </View>

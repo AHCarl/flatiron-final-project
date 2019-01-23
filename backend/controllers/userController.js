@@ -14,7 +14,7 @@ exports.readAll = (req, res, next) => {
 }
 
 exports.readMe = (req, res, next) => {
-  User.findOne({email: req.email}, (err, user) => {
+  User.findOne({email: req.body.email}, (err, user) => {
     if (err) {
       res.status(500).json({
         success: false,

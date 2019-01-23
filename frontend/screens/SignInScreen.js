@@ -16,9 +16,6 @@ export default class SignInScreen extends React.Component {
     error: null
   }
 
-  // userData = {email: this.state.email, password: this.state.password}
-
-
   _signIn = () => {
     fetch(`${Keys.userUrl}/signin`, {
       method: 'POST',

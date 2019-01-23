@@ -7,18 +7,20 @@ const requireAuth = passport.authenticate('jwt', {session: false})
 const requireSignIn = passport.authenticate('local', {session: false})
 
 module.exports = (app) => {
-  app.post('/api/user/signup', Authentication.signup)
-  app.post('/api/user/signin', requireSignIn, Authentication.signin)
-
+  
+  //test routes
   app.get('/api/test', requireAuth, (req, res) => {
     res.send({msg: 'This is behind authentication'})
   })
-
   app.post('/api/test', (req, res) => {
     console.log(req)
     res.send({msg: 'This is behind authentication'})
   })
 
+  //actual routes
+  app.post('/api/user/signup', Authentication.signup)
+  app.post('/api/user/signin', requireSignIn, Authentication.signin)
+
   app.get('/api/users', UserController.readAll)
-  app.get('/api/user', UserController.readMe)
+  app.get(`/api/user/mydata`, UserController.readMe)
 }
