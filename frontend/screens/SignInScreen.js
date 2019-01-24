@@ -27,14 +27,14 @@ class SignInScreen extends React.Component {
       }
     })
     .then(resp => {
-      return resp.ok ? resp.json() : resp.statusText
+      return resp.ok ? resp.json() : console.log(resp.statusText)
     })
     .then(resp => {
-      if (resp === "Unauthorized") {
+      if (resp == undefined) {
         this.setState({error: 'Incorrect username or password'})
+        throw new Error("thrown")
       } else {
         AsyncStorage.setItem("userToken", resp.token)
-        // this.props.navigation.navigate('Main')
       }
     })
     .then(() => this.props.getUser(this.state.email))
@@ -56,10 +56,9 @@ class SignInScreen extends React.Component {
         <View style={{alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
           <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} textAlign={'center'} onChangeText={(email) => this.setState({email})}/>
-          {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
           <FormLabel>PASSWORD</FormLabel>
           <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
-          {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
+          <FormValidationMessage>{this.state.error}</FormValidationMessage>
           <Button title={"SIGN IN"} buttonStyle={styles.inButton} onPress={() => this._signIn()}></Button>
         </View>
         <Button title="Click here to sign up!" buttonStyle={styles.upButton} onPress={this.navigateToSignUp}></Button>

@@ -32,14 +32,17 @@ class SignUpScreen extends React.Component {
       return resp.ok ? resp.json() : resp.statusText
     })
     .then(resp => {
-      if (resp.error) {
-        this.setState({error: resp.error})
+      console.log(resp)
+      if (resp == undefined ) {
+        this.setState({error: "Something ain't quite right. Try that one again."})
+        throw new Error("bad")
       } else {
         Alert.alert("You've been registered!", "Welcome to Flog.", [
           {text: "Let's go", onPress: () => this._signIn()}
         ])
       }
     })
+    .catch(err => console.log(err))
   }
 
   _signIn = () => {
@@ -51,14 +54,14 @@ class SignUpScreen extends React.Component {
       }
     })
     .then(resp => {
-      return resp.ok ? resp.json() : resp.statusText
+      return resp.ok ? resp.json() : console.log(resp.statusText)
     })
     .then(resp => {
-      if (resp === "Unauthorized") {
+      if (resp == undefined) {
         this.setState({error: 'Incorrect username or password'})
+        throw new Error("thrown")
       } else {
         AsyncStorage.setItem("userToken", resp.token)
-        // this.props.navigation.navigate('Main')
       }
     })
     .then(() => this.props.getUser(this.state.email))
@@ -66,10 +69,8 @@ class SignUpScreen extends React.Component {
     .catch(err => console.log(err))
   }
 
-  //TODO: change onPress to _signUp method
   render() {
     return (
-      //enable FVM once error handling is in place 
       <View style={{flex: 1}}>
       <Header leftComponent={<MyBackButton/>} centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
         <View style={{flex: 1, alignItems: 'center'}}>
@@ -77,12 +78,11 @@ class SignUpScreen extends React.Component {
           <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} 
             textAlign={'center'} onChangeText={(email) => this.setState({email})}
           />
-          {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
           <FormLabel>PASSWORD</FormLabel>
           <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} 
             textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}
           />
-          {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
+          <FormValidationMessage>{this.state.error}</FormValidationMessage>
           <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signUp}></Button>
         </View>
       </View>
