@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getUser()
+    // this.props.getUser()
     console.log(this.props.user)
   }
 
@@ -110,13 +110,7 @@ class HomeScreen extends React.Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state
-  }
-}
-
-export default connect(mapStateToProps, {getUser})(HomeScreen)
+export default connect(state => ({user: state}))(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {

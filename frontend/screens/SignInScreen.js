@@ -2,9 +2,11 @@ import React from 'react';
 import Colors from '../constants/Colors'
 import { AsyncStorage, View, StyleSheet } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements';
-import Keys from "../constants/Keys"
+import Keys from "../constants/Keys";
+import { getUser } from '../redux/reducer';
+import { connect } from 'react-redux';
 
-export default class SignInScreen extends React.Component {
+class SignInScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -32,9 +34,11 @@ export default class SignInScreen extends React.Component {
         this.setState({error: 'Incorrect username or password'})
       } else {
         AsyncStorage.setItem("userToken", resp.token)
-        this.props.navigation.navigate('Main')
+        // this.props.navigation.navigate('Main')
       }
     })
+    .then(() => this.props.getUser(this.state.email))
+    .then(() => this.props.navigation.navigate('Main'))
     .catch(err => console.log(err))
   }
 
@@ -63,6 +67,8 @@ export default class SignInScreen extends React.Component {
     );
   }
 }
+
+export default connect(state => ({user: state}), {getUser})(SignInScreen)
 
 const styles = StyleSheet.create({
   input: {

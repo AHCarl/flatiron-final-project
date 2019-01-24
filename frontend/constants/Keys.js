@@ -1,4 +1,4 @@
 export default {
   persistenceKey: "bananarama",
-  userUrl: "http://10.185.5.255:5000/api/user"
+  userUrl: "http://192.168.50.66:5000/api/user"
 }
