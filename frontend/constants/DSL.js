@@ -72,11 +72,11 @@ export const parseWorkout = (log) => {
       } else if (linArr.length == 2){
           chunk.weight = linArr[0]
           chunk.reps = linArr[1]
-          chunk.sets = 1
+          chunk.sets = "1"
       } else {
           chunk.weight = linArr[0]
-          chunk.reps = 1 
-          chunk.sets = 1
+          chunk.reps = "1" 
+          chunk.sets = "1"
       }
       liftData.push(chunk)
     })

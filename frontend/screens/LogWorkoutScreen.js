@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
-import SignOutIcon from '../components/SignOutIcon';
+import SignOutIcon from '../components/SignOutIcon'
+import { parseWorkout } from '../constants/DSL'
 
 
 class LogWorkoutScreen extends React.Component {
@@ -12,9 +13,11 @@ class LogWorkoutScreen extends React.Component {
   };
 
   state = {
-    bodyWeight: '180',
+    bodyweight: this.props.bodyweight,
     log: '',
-    testWidth: '99%'
+    testWidth: '99%',
+    date: new Date,
+    isMetric: this.props.isMetric
   }
 
   componentDidMount () {
@@ -26,6 +29,11 @@ class LogWorkoutScreen extends React.Component {
     }, 100)
   }
 
+  _handleSubmit = () => {
+    let exercisesToday = parseWorkout(this.state.log)
+  }
+
+
   //TODO 3: get onPress submitting to backend
   render() {
     return (
@@ -35,11 +43,11 @@ class LogWorkoutScreen extends React.Component {
       rightComponent={<SignOutIcon />}
       />
       <View style={{flex: 1, padding: 6}}>
-        <Text style={{fontSize: 12}}>Bodyweight:</Text>
+        <Text style={{fontSize: 12}}>Bodyweight {this.state.isMetric ? '(kg)' : '(lbs)'}</Text>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-between"}}>
-          <TextInput style={styles.bodyWeightInput} value={this.state.bodyWeight}
+          <TextInput style={styles.bodyWeightInput} value={this.props.bodyWeight}
             maxLength={3} onChangeText={(bodyWeight) => this.setState({bodyWeight})}/>
-          <Button title={"Log It!"} buttonStyle={styles.logButton} onPress={() => console.log('Logged!')}/>
+          <Button title={"Log It!"} buttonStyle={styles.logButton} onPress={this._handleSubmit}/>
         </View>
         <TextInput style={
           { width: this.state.testWidth,
@@ -61,7 +69,8 @@ class LogWorkoutScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  bodyweight: state.user.bodyweight, 
+  bodyweight: state.user.bodyweight,
+  isMetric: state.user.isMetric
 })
 
 export default connect(mapStateToProps)(LogWorkoutScreen)
