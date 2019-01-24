@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 import SignOutIcon from '../components/SignOutIcon'
 import { parseWorkout } from '../constants/DSL'
+import Keys from '../constants/Keys'
+import { getUser } from '../redux/reducer'
 
 
 class LogWorkoutScreen extends React.Component {
@@ -16,7 +18,7 @@ class LogWorkoutScreen extends React.Component {
     bodyweight: this.props.bodyweight,
     log: '',
     testWidth: '99%',
-    date: new Date,
+    date: null,
     isMetric: this.props.isMetric
   }
 
@@ -26,11 +28,38 @@ class LogWorkoutScreen extends React.Component {
      */
     setTimeout(() => {
       this.setState({testWidth: '100%'})
-    }, 100)
+    }, 100);
+    this.setDate()
+  }
+
+  setDate = () => {
+    let newDate = new Date
+    let currentDate = newDate.toDateString()
+    this.setState({date: currentDate})
   }
 
   _handleSubmit = () => {
     let exercisesToday = parseWorkout(this.state.log)
+    let newWorkout = {
+      bodyweightToday: this.state.bodyweight,
+      date: this.state.date,
+      exercisesToday: exercisesToday
+    }
+    fetch(`${Keys.userUrl}/log`, {
+      method: 'PATCH',
+      body: JSON.stringify({email: this.props.email, workout: newWorkout }),
+      headers: {
+        'Content-Type':'application/json'
+      }
+    })
+    .then(resp => {
+      return resp.ok ? resp.json() : console.log(resp.statusText)
+    })
+    .then(() => this.props.getUser(this.props.email))
+    .then(() => Alert.alert("Workout logged!", "Another one in the books.", [
+      {text: "Right on", onPress: () => console.log("OK")}
+    ]))
+    .catch((err) => console.log(err))
   }
 
 
@@ -45,8 +74,8 @@ class LogWorkoutScreen extends React.Component {
       <View style={{flex: 1, padding: 6}}>
         <Text style={{fontSize: 12}}>Bodyweight {this.state.isMetric ? '(kg)' : '(lbs)'}</Text>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-between"}}>
-          <TextInput style={styles.bodyWeightInput} value={this.props.bodyWeight}
-            maxLength={3} onChangeText={(bodyWeight) => this.setState({bodyWeight})}/>
+          <TextInput style={styles.bodyWeightInput} value={this.props.bodyweight.toString()}
+            maxLength={3} onChangeText={(bodyweight) => this.setState({bodyweight})}/>
           <Button title={"Log It!"} buttonStyle={styles.logButton} onPress={this._handleSubmit}/>
         </View>
         <TextInput style={
@@ -70,10 +99,11 @@ class LogWorkoutScreen extends React.Component {
 
 const mapStateToProps = (state) => ({
   bodyweight: state.user.bodyweight,
-  isMetric: state.user.isMetric
+  isMetric: state.user.isMetric,
+  email: state.user.email
 })
 
-export default connect(mapStateToProps)(LogWorkoutScreen)
+export default connect(mapStateToProps, {getUser})(LogWorkoutScreen)
 
 const styles = StyleSheet.create({
   bodyWeightInput: {

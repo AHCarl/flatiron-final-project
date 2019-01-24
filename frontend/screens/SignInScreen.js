@@ -57,10 +57,10 @@ class SignInScreen extends React.Component {
           <FormLabel>EMAIL</FormLabel>  
           <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} textAlign={'center'} onChangeText={(email) => this.setState({email})}/>
           <FormLabel>PASSWORD</FormLabel>
-          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password:password, error: null})}/>
           <FormValidationMessage>{this.state.error}</FormValidationMessage>
-          <Button title={"SIGN IN"} buttonStyle={styles.inButton} onPress={() => this._signIn()}></Button>
         </View>
+        <Button title={"Sign In"} buttonStyle={styles.inButton} onPress={() => this._signIn()}></Button>
         <Button title="Click here to sign up!" buttonStyle={styles.upButton} onPress={this.navigateToSignUp}></Button>
       </View>
     );
@@ -71,7 +71,7 @@ export default connect(state => ({user: state}), {getUser})(SignInScreen)
 
 const styles = StyleSheet.create({
   input: {
-    width: 200,
+    width: 250,
     backgroundColor: '#fff',
     borderBottomColor: '#bbb',
     borderBottomWidth: 2
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   upButton: {
-    top: 20,
+    top: 32,
     backgroundColor: Colors.tintColor,
     borderColor: 'transparent',
     borderRadius: 3,

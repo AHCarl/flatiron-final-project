@@ -27,12 +27,11 @@ exports.readMe = (req, res, next) => {
 }
 
 exports.addWorkout = (req, res, next) => {
-  User.findOneAndUpdate({email: req.body.email}, {workouts: req.body.workout}, (err, user) => {
+  User.update({email: req.body.email}, { $push: { workouts: req.body.workout} }, (err, user) => {
       if (err) {
         console.log(err)
       } else {
-        user.workouts.push(myWorkout)
-        user.save()
+        console.log(user)
         res.status(200).json(user)
       }
     })

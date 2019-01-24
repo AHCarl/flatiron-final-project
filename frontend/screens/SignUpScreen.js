@@ -23,7 +23,7 @@ class SignUpScreen extends React.Component {
   _signUp = () => {
     fetch(`${Keys.userUrl}/signup`, {
       method: 'POST',
-      body: JSON.stringify({"email": this.state.email, "password": this.state.password}),
+      body: JSON.stringify({"email": this.state.email, "password": this.state.password, "bodyweight":150}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -94,7 +94,7 @@ export default connect(state => ({user: state}), {getUser})(SignUpScreen)
 
 const styles = StyleSheet.create({
   input: {
-    width: 200,
+    width: 250,
     backgroundColor: '#fff',
     borderBottomColor: '#bbb',
     borderBottomWidth: 2
