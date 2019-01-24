@@ -10,7 +10,8 @@ const tokenForUser = (user) => {
 exports.signin = (req, res, next) => {
   const token = tokenForUser(req.user)
   res.json({token: token})
-}
+  }
+
 
 exports.signup = (req, res, next) => {
   const email = req.body.email
