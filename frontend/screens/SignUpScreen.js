@@ -11,8 +11,8 @@ export default class SignUpScreen extends React.Component {
   }
 
   state = {
-    email = '',
-    password = ''
+    email: '',
+    password: ''
   }
 
   //TODO: change onPress to _signUp method

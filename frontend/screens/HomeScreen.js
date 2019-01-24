@@ -8,15 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Header } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import SignOutIcon from '../components/SignOutIcon';
+import { getUser } from '../redux/reducer'
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount() {
+    this.props.getUser()
+    console.log(this.props.user)
+  }
 
   render() {
     return (
@@ -102,6 +109,14 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state
+  }
+}
+
+export default connect(mapStateToProps, {getUser})(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {

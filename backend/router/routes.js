@@ -22,5 +22,5 @@ module.exports = (app) => {
   app.post('/api/user/signin', requireSignIn, Authentication.signin)
 
   app.get('/api/users', UserController.readAll)
-  app.get(`/api/user/mydata`, UserController.readMe)
+  app.post(`/api/user/mydata`, UserController.readMe)
 }

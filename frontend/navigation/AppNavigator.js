@@ -3,7 +3,7 @@ import { createAppContainer, createSwitchNavigator, createStackNavigator } from 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { persistenceKey } from '../constants/Keys';
+import Keys from '../constants/Keys';
 import reducer from '../redux/reducer';
 
 import MainTabNavigator from './MainTabNavigator';
@@ -28,11 +28,12 @@ const App = createAppContainer(createSwitchNavigator({
 { initialRouteName: 'AuthLoading' }
 ));
 
+
 export default class AppNavigator extends React.Component {
   render() {
     return (
     <Provider store={store}>
-      <App persistenceKey={persistenceKey} />
+      <App persistenceKey={Keys.persistenceKey} />
     </Provider>
     )
   }
