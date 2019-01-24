@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button, Header } from 'react-native-elements';
-import SignOutIcon from '../components/SignOutIcon'
+import { connect } from 'react-redux';
+import SignOutIcon from '../components/SignOutIcon';
 
 
-export default class LogWorkoutScreen extends React.Component {
+class LogWorkoutScreen extends React.Component {
 
   static navigationOptions = {
     header: null,
@@ -58,6 +59,12 @@ export default class LogWorkoutScreen extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  bodyweight: state.user.bodyweight, 
+})
+
+export default connect(mapStateToProps)(LogWorkoutScreen)
 
 const styles = StyleSheet.create({
   bodyWeightInput: {

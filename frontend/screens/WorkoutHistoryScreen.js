@@ -1,10 +1,15 @@
 //TODO 2 : make this
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, FlatList } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { View, FlatList, Text} from 'react-native'
+import { ListItem, Header } from 'react-native-elements'
+import SignOutIcon from '../components/SignOutIcon'
 
 class WorkoutHistoryScreen extends React.Component {
+  
+  static navigationOptions = {
+    header: null
+  }
 
   state = {
     myWorkouts: []
@@ -12,15 +17,8 @@ class WorkoutHistoryScreen extends React.Component {
 
   componentDidMount() {
     this.myWorkoutDates()
+    this.render()
   }
-
-  // myWorkoutDates = () => {
-  //   let wos = this.state.workouts 
-  //   wos.forEach(wo => {
-  //     this.state.workoutDates.push(wo["date"])
-  //   });
-  //   console.log(this.state.workoutDates)
-  // }
 
   myWorkoutDates = () => {
     let wos = this.props.workouts 
@@ -30,6 +28,7 @@ class WorkoutHistoryScreen extends React.Component {
       oneWo.workoutDate = wo["date"]
       wo["exercisesToday"].forEach( eT => {
         woArr.push(eT["exercise"])
+        woArr.join(" ")
         oneWo.exercises = woArr
       })
       this.state.myWorkouts.push(oneWo)
@@ -37,24 +36,30 @@ class WorkoutHistoryScreen extends React.Component {
     console.log(this.state.myWorkouts)
   }
 
-  keyExtractor = (item, index) => index
 
-  renderItem = () => (
+  keyExtractor = (item, index) => index.toString()
+
+ 
+  
+
+  renderItem = ({item}) => (
     <ListItem
-      title={item.name}
-      subtitle={item.subtitle}
+      title={item.workoutDate.slice(0,10)}
+      subtitle={<Text>{item.exercises}</Text>}
     />
   )
 
   render () {
-
     return (
-      // <FlatList
-      //   keyExtractor={this.keyExtractor}
-      //   data={this.props.workoutDates}
-      //   renderItem={this.renderItem}
-      // />
-      <View></View>
+      <View style={{flex: 1}}>
+        <Header centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} rightComponent={<SignOutIcon />}/>
+        <FlatList
+          keyExtractor={this.keyExtractor}
+          data={this.state.myWorkouts}
+          renderItem={this.renderItem}
+        >
+        </FlatList>
+      </View>
     )
   }
 }
