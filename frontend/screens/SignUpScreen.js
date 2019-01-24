@@ -1,10 +1,14 @@
 import React from 'react';
 import Colors from '../constants/Colors'
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert, AsyncStorage } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Header } from 'react-native-elements'
+import { connect } from 'react-redux';
+import { getUser } from '../redux/reducer'
 import MyBackButton from '../components/MyBackButton'
+import { _signIn } from './SignInScreen'
+import Keys from '../constants/Keys'
 
-export default class SignUpScreen extends React.Component {
+class SignUpScreen extends React.Component {
 
   static navigationOptions = {
     header: null
@@ -12,7 +16,54 @@ export default class SignUpScreen extends React.Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
+    error: null
+  }
+
+  _signUp = () => {
+    fetch(`${Keys.userUrl}/signup`, {
+      method: 'POST',
+      body: JSON.stringify({"email": this.state.email, "password": this.state.password}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => {
+      return resp.ok ? resp.json() : resp.statusText
+    })
+    .then(resp => {
+      if (resp.error) {
+        this.setState({error: resp.error})
+      } else {
+        Alert.alert("You've been registered!", "Welcome to Flog.", [
+          {text: "Let's go", onPress: () => this._signIn()}
+        ])
+      }
+    })
+  }
+
+  _signIn = () => {
+    fetch(`${Keys.userUrl}/signin`, {
+      method: 'POST',
+      body: JSON.stringify({"email": this.state.email, "password": this.state.password}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => {
+      return resp.ok ? resp.json() : resp.statusText
+    })
+    .then(resp => {
+      if (resp === "Unauthorized") {
+        this.setState({error: 'Incorrect username or password'})
+      } else {
+        AsyncStorage.setItem("userToken", resp.token)
+        // this.props.navigation.navigate('Main')
+      }
+    })
+    .then(() => this.props.getUser(this.state.email))
+    .then(() => this.props.navigation.navigate('Main'))
+    .catch(err => console.log(err))
   }
 
   //TODO: change onPress to _signUp method
@@ -23,17 +74,23 @@ export default class SignUpScreen extends React.Component {
       <Header leftComponent={<MyBackButton/>} centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }} />
         <View style={{flex: 1, alignItems: 'center'}}>
           <FormLabel>EMAIL</FormLabel>  
-          <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} textAlign={'center'} onChangeText={(email) => this.setState({email})}/>
+          <FormInput inputStyle={styles.input} value={this.state.email} textContentType={'emailAddress'} 
+            textAlign={'center'} onChangeText={(email) => this.setState({email})}
+          />
           {/* <FormValidationMessage>{'Please enter your email'}</FormValidationMessage> */}
           <FormLabel>PASSWORD</FormLabel>
-          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+          <FormInput inputStyle={styles.input} value={this.state.password} textContentType={'password'} 
+            textAlign={'center'} secureTextEntry={true} onChangeText={(password) => this.setState({password})}
+          />
           {/* <FormValidationMessage>{'Please enter your password'}</FormValidationMessage> */}
-          <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signInAsync}></Button>
+          <Button title={"SIGN ME UP!"} buttonStyle={styles.upButton} onPress={this._signUp}></Button>
         </View>
       </View>
     );
   }
 }
+
+export default connect(state => ({user: state}), {getUser})(SignUpScreen)
 
 const styles = StyleSheet.create({
   input: {
