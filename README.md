@@ -1,4 +1,4 @@
-# FLog
+# fLog
 
 Mobile workout logging app with a notepad-like interface that parses user input using a simple Domain Specific Language. It should be simple to use for everyone, yet allow in-depth data analytics for enthusiasts.
 
